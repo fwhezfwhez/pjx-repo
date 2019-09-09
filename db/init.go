@@ -43,12 +43,12 @@ func init() {
 		panic(e)
 	}
 
+	// 自动重连，每60秒ping一次，失败时自动重连，重连间隔依次为3s,3s,15s,30s,60s,60s,60s.....
 	go func(dbConfig string) {
 		var intervals = []time.Duration{3 * time.Second, 3 * time.Second, 15 * time.Second, 30 * time.Second, 60 * time.Second,
-			120 * time.Second, 360 * time.Second, 10 * time.Minute, 1 * time.Hour, 24 * time.Hour,
 		}
 		for {
-			time.Sleep(30 * time.Second)
+			time.Sleep(60 * time.Second)
 			if e := DB.DB().Ping(); e != nil {
 			L:
 				for i := 0; i < len(intervals); i++ {
