@@ -2,14 +2,13 @@ package db
 
 import (
 	"database/sql"
-	"errorX"
 	"fmt"
+	"github.com/fwhezfwhez/errorx"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // 导入postgres
 	_ "github.com/lib/pq"
 	"log"
 	"shangraomajiang/config"
-	"shangraomajiang/util/common/util"
 	"time"
 )
 
@@ -53,7 +52,7 @@ func init() {
 			if e := DB.DB().Ping(); e != nil {
 			L:
 				for i := 0; i < len(intervals); i++ {
-					e2 := util.RetryHandler(3, func() (bool, error) {
+					e2 := RetryHandler(3, func() (bool, error) {
 						var e error
 						DB, e = gorm.Open("postgres", dbConfig)
 						if e != nil {
