@@ -9,7 +9,7 @@ https://github.com/fwhezfwhez/pjx
 `go get -u github.com/fwhezfwhez/pjx`
 
 ## 3. Clone
-`pjx clone https://github.com/fwhezfwhez/pjx-repo.git global -u` it will clone repo into %pjx_path%/global for pjx use.
+`pjx clone https://github.com/fwhezfwhez/pjx-repo.git global -u` it will clone repo `into %pjx_path%/global` for pjx use.
 
 ## 4. Repo-component
 Details of existing component.
@@ -33,7 +33,7 @@ func main() {
 #### 4.2 errorReport
 It provide error report component.It will handle error depending on mode.More refer to https://github.com/fwhezfwhez/errorx
 
-`cd %your_project%/dep` cd where you want to put db
+`cd %your_project%/dep` cd where you want to put errorReport
 `pjx use errorReport` add db package into your project
 
 ```go
