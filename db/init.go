@@ -8,23 +8,30 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres" // 导入postgres
 	_ "github.com/lib/pq"
 	"log"
-	"shangraomajiang/config"
 	"time"
 )
 
 var DB *gorm.DB
 var PQDB *sql.DB
 
+const (
+	host     = "localhost"
+	user     = "postgres"
+	dbname   = "test"
+	sslmode  = "disable"
+	password = "password"
+	port     = "5432"
+)
+
 func init() {
 	// 初始化数据库orm连接
-	c := config.GetConfig()
-
-	dbConfig := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=%s password=%s",
-		c.GetString("db.host"),
-		c.GetString("db.user"),
-		c.GetString("db.dbname"),
-		c.GetString("db.sslmode"),
-		c.GetString("db.password"),
+	dbConfig := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=%s password=%s port=%s",
+		host,
+		user,
+		dbname,
+		sslmode,
+		password,
+		port,
 	)
 	log.Println(dbConfig)
 	db, err := gorm.Open("postgres",

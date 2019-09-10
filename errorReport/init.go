@@ -2,13 +2,16 @@ package errorReport
 
 import (
 	"github.com/fwhezfwhez/errorx"
-	"shangraomajiang/config"
 )
 
 var Er *errorx.Reporter
 
+const (
+	mode = "dev"
+)
+
 func init() {
-	Er = errorx.NewReporter(config.Mode)
+	Er = errorx.NewReporter(mode)
 	Er.SetContextName("request")
 	Er.AddURL("dev", "https://xyx.zonst.com/dev/err/error/").
 		AddURL("pro", "https://xyx.zonst.com/err/error/")

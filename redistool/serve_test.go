@@ -16,7 +16,7 @@ func TestGetRedis(t *testing.T) {
 	if err != nil {
 		fmt.Println("数据设置失败:", err)
 	}
-	username, err := redis.String(c.Do("GET", "user_nam33e"))
+	username, err := redis.String(c.Do("GET", "user_name"))
 
 	if err != nil {
 		fmt.Println("数据获取失败:", err)
