@@ -75,6 +75,10 @@ func init() {
 						}
 						continue
 					}
+					DB.SingularTable(true)
+					DB.LogMode(true)
+					DB.DB().SetConnMaxLifetime(10 * time.Second)
+					DB.DB().SetMaxIdleConns(30)
 					break L
 				}
 
