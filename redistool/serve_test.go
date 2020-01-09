@@ -3,16 +3,34 @@ package redistool
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/garyburd/redigo/redis"
+	"github.com/gomodule/redigo/redis"
+	"log"
 	"testing"
 )
 
 func TestGetRedis(t *testing.T) {
-	pool := GetRedis("redis://localhost:6379")
+	pool := GetRedis("redis://localhost:6379/1")
 	c := pool.Get()
 	defer c.Close()
-
-	_, err := c.Do("MSET", "user_name", "kkk")
+	log.SetFlags(log.Llongfile | log.LstdFlags)
+	_, err := c.Do("SADD", "users", "hello")
+	if err != nil {
+		log.Println( err)
+		return
+	}
+	_, err = c.Do("SADD", "users", "2")
+	if err != nil {
+		log.Println( err)
+		return
+	}
+	bufs, err := redis.ByteSlices(c.Do("sunion", "users"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fmt.Println(string(bufs[0]))
+	//fmt.Println(string(buf.([]interface{})[0].([]uint8)[2]))
+	_, err = c.Do("MSET", "user_name", "kkk")
 	if err != nil {
 		fmt.Println("数据设置失败:", err)
 	}
@@ -28,17 +46,6 @@ func TestGetRedis(t *testing.T) {
 	type Man struct {
 		Name string `json:"name"`
 	}
-	//v, _ := json.Marshal(Man{Name: "ft"})
-	//_,err =c.Do("LPUSH", "test", v)
-	//if err !=nil {
-	//	fmt.Println("LPUSH失败:"+ err.Error())
-	//	return
-	//}
-	//_,err =c.Do("LPUSH", "test", v)
-	//if err !=nil {
-	//	fmt.Println("LPUSH失败:"+ err.Error())
-	//	return
-	//}
 
 	rp, err := c.Do("LRANGE", "test", 0, 10)
 	if err != nil {
